@@ -22,6 +22,11 @@ public class LinkedList<E> implements ListI<E> {
 		tail = null;
 		currentSize = 0;
 	}
+	
+	@Override
+	public int size() {
+		return currentSize;
+	}
 
 	@Override
 	public void addFirst(E obj) {
@@ -165,6 +170,8 @@ public class LinkedList<E> implements ListI<E> {
 		}
 		return tail.data;
 	}
+
+
 
 	
 }

@@ -1,6 +1,8 @@
 package dataStructure.listI;
 
 public interface ListI<E> {
+	int size();
+	
 	void addFirst(E obj);
 	void addLast(E obj);
 	
