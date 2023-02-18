@@ -1,5 +1,8 @@
 package dataStructure.linkedList;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import dataStructure.listI.ListI;
 
 public class LinkedList<E> implements ListI<E> {
@@ -15,6 +18,29 @@ public class LinkedList<E> implements ListI<E> {
 			this.next = null;
 			this.data = data;
 		}
+	}
+	
+	class IteratorHelper implements Iterator<E> {
+		Node<E> index;
+		public IteratorHelper() {
+			index = head;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return index != null;
+		}
+
+		@Override
+		public E next() {
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			E val = index.data;
+			index = index.next;
+			return val;
+		}
+		
 	}
 	
 	public LinkedList() {
@@ -171,7 +197,9 @@ public class LinkedList<E> implements ListI<E> {
 		return tail.data;
 	}
 
+	@Override
+	public Iterator<E> iterator() {
+		return new IteratorHelper();
+	}
 
-
-	
 }

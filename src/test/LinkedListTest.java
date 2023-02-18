@@ -1,14 +1,31 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
+import java.util.Date;
+import java.util.logging.*;
+
+
+import org.junit.BeforeClass;
 import org.junit.Test;
+
 import dataStructure.linkedList.LinkedList;
 import dataStructure.listI.ListI;
 
 public class LinkedListTest {
+	private static Logger logger = Logger.getLogger(LinkedListTest.class.getName());
 	ListI<Integer> list = new LinkedList<Integer>();
+	
+	@BeforeClass
+	public static void setUpBeforClass() {
+		// remove default log handler
+        logger.setUseParentHandlers(false);
+
+        // add new log handler
+        Handler handler = new ConsoleHandler();
+        handler.setFormatter(new MyLogFormatter());
+        logger.addHandler(handler);
+	}
 
 	@Test
 	public void addFirstTest() {
@@ -33,5 +50,33 @@ public class LinkedListTest {
 		assertTrue(flag);
 		assertTrue(list.size() == 0);
 	}
+	
+	@Test
+	public void iteratorTest() {
+		for(int i = 0; i < 5; i++) {
+			list.addLast(i);
+		}
+		
+		int i = 0;
+		for(Integer x : list) {
+			logger.info("수 : " + x);
+			assertTrue(i == x);
+			i++;
+		}
+	}
+	
+	public static class MyLogFormatter extends Formatter {
+
+		private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+
+        @Override
+        public synchronized String format(LogRecord lr) {
+            return String.format(format,
+                    new Date(lr.getMillis()),
+                    lr.getLevel().getLocalizedName(),
+                    lr.getMessage()
+            );
+        }
+    }
 
 }

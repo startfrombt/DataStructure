@@ -1,6 +1,6 @@
 package dataStructure.listI;
 
-public interface ListI<E> {
+public interface ListI<E> extends Iterable<E>{
 	int size();
 	
 	void addFirst(E obj);
